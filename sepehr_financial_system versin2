@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💲سامانه امور مالی سپهر💲</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Tahoma', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #2980b9;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9em;
+            box-sizing: border-box;
+        }
+        .form-group input[type="tel"] {
+            direction: ltr;
+            text-align: right;
+        }
+        .form-group input::placeholder {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .form-group input[type="tel"]::placeholder {
+             color: #aaa;
+             font-size: 0.9em;
+             direction: ltr;
+             text-align: right;
+        }
+        .form-group.checkbox-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .form-group.checkbox-group input[type="checkbox"] {
+            margin-left: 10px;
+            width: auto;
+        }
+        .form-group.checkbox-group label {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: normal;
+            color: #333;
+        }
+        .date-time-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            text-align: right;
+        }
+        .date-time-group .form-group {
+            flex: 1;
+            min-width: 100px;
+            margin-bottom: 0;
+        }
+        .date-time-group .form-group label {
+            margin-bottom: 5px;
+        }
+        .date-time-group .form-group input {
+            width: 100%;
+        }
+
+        /* Header and Navigation */
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1002;
+        }
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 1.8em;
+        }
+        .hamburger-menu {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            z-index: 1003;
+        }
+        .hamburger-menu .line {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: #34495e;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            transition: right 0.3s ease-in-out;
+            z-index: 1001;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.open {
+            right: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 0;
+        }
+        .sidebar li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #4a627a;
+            color: #ecf0f1;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar li:hover {
+            background-color: #4a627a;
+        }
+        .sidebar li.active {
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+            border-left: 5px solid white;
+            padding-left: 15px;
+        }
+        
+        /* Version text in sidebar - چسبیده به گزینه‌ها */
+        .sidebar-version {
+            padding: 20px 20px 10px 20px;
+            text-align: center;
+            color: #ecf0f1;
+            font-size: 1em;
+            border-top: 1px solid #4a627a;
+            margin-top: 0;
+            margin-bottom: 0;
+            background-color: #2c3e50;
+        }
+        .sidebar-version .version-text {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+        .sidebar-version .version-number {
+            display: block;
+            direction: ltr;
+            color: #bdc3c7;
+            font-size: 1em;
+        }
+        
+        /* فاصله‌دهنده برای پر کردن فضای خالی پایین منو */
+        .sidebar-spacer {
+            flex-grow: 1;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .overlay.open {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Sections */
+        .main-page, .new-deposit-section, .deposit-list-section, .guide-section, 
+        .deposit-detail-section, .edit-deposit-section, .media-section, .support-section {
+            display: none;
+            padding: 20px;
+        }
+
+        /* Media and Support Cards */
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .platform-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+        }
+        .platform-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+        
+        /* Platform-specific card colors - رسانه‌ها */
+        .platform-card.rubika {
+            border-top: 5px solid #3498db; /* آبی */
+        }
+        .platform-card.eitaa {
+            border-top: 5px solid #e67e22; /* نارنجی */
+        }
+        .platform-card.bale {
+            border-top: 5px solid #2ecc71; /* سبز */
+        }
+        
+        /* Platform-specific card colors - پشتیبانی */
+        .platform-card.support-rubika {
+            border-top: 5px solid #3498db; /* آبی */
+        }
+        .platform-card.support-eitaa {
+            border-top: 5px solid #e67e22; /* نارنجی */
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+        .platform-card.support-bale {
+            border-top: 5px solid #2ecc71; /* سبز */
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+        .platform-card.support-eitaa:hover,
+        .platform-card.support-bale:hover {
+            transform: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .platform-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .platform-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .platform-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .platform-description {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .platform-link {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .platform-link:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+            color: white;
+        }
+        .platform-link.disabled {
+            background-color: #95a5a6;
+            color: white;
+            cursor: not-allowed;
+        }
+        .platform-link.disabled:hover {
+            background-color: #95a5a6;
+            transform: none;
+        }
+        .section-description {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Login Modal Styles */
+        .login-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .login-modal.open {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .login-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .login-modal-content h2 {
+             color: #2c3e50;
+             margin-bottom: 30px;
+        }
+        .login-modal-content .form-group {
+            display: inline-block;
+            width: auto;
+            min-width: 300px;
+            text-align: right;
+        }
+
+        /* Main Page */
+        .main-page h2 {
+            margin-top: 0;
+        }
+        .main-page .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .main-page .options .btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+        }
+
+        /* New Deposit Form */
+        .new-deposit-section .form-title {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .new-deposit-section .form-title:hover {
+            background-color: #27ae60;
+        }
+        .new-deposit-section .deposit-form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        /* Deposit List */
+        .deposit-list-section .deposit-item {
+            background-color: #ecf0f1;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .deposit-list-section .deposit-item .info {
+            flex-grow: 1;
+            text-align: right;
+        }
+        .deposit-list-section .deposit-item .info span {
+            margin-left: 15px;
+        }
+        .deposit-list-section .deposit-item .details-link {
+            margin-right: auto;
+            margin-left: 0;
+            white-space: nowrap;
+        }
+
+        .deposit-detail-section, .edit-deposit-section {
+            background-color: #fdfdfd;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .deposit-detail-section h3, .edit-deposit-section h3 {
+            text-align: right;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        .deposit-detail-section .detail-item, .edit-deposit-section .detail-item {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .deposit-detail-section .detail-item strong, .edit-deposit-section .detail-item strong {
+            display: inline-block;
+            width: 150px;
+            color: #34495e;
+        }
+        .deposit-detail-section .detail-item span, .edit-deposit-section .detail-item span {
+             display: block;
+             margin-top: 5px;
+             word-wrap: break-word;
+             white-space: normal;
+        }
+        .deposit-detail-section .btn-group, .edit-deposit-section .btn-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Guide Section */
+        .guide-section .guide-content {
+            margin-top: 20px;
+            text-align: right;
+            padding: 0 15px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .guide-section .guide-content h3 {
+            text-align: right;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .guide-section .guide-content p {
+            margin-bottom: 15px;
+        }
+        .guide-section .guide-content ul {
+            list-style-type: disc;
+            margin-right: 20px;
+            margin-bottom: 15px;
+        }
+        .guide-section .guide-content li {
+            margin-bottom: 8px;
+        }
+        .guide-section .final-options {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        #guide-logout-button {
+            display: none;
+        }
+
+        /* Logout Confirmation Modal */
+        .logout-modal, .delete-modal {
+            display: none;
+            position: fixed;
+            z-index: 1005;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .logout-modal.open, .delete-modal.open {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .logout-modal-content, .delete-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .logout-modal-content h3, .delete-modal-content h3 {
+            margin-top: 0;
+            color: #e74c3c;
+        }
+        .logout-modal-content p, .delete-modal-content p {
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        .logout-modal-content .btn-group, .delete-modal-content .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 1.5em;
+            }
+            .hamburger-menu {
+                top: 12px;
+                right: 15px;
+            }
+            .sidebar {
+                width: 250px;
+            }
+            .main-page .options {
+                flex-direction: column;
+                align-items: center;
+            }
+            .deposit-list-section .deposit-item {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .deposit-list-section .deposit-item .details-link {
+                margin-top: 10px;
+                margin-right: 0;
+                width: 100%;
+                text-align: center;
+            }
+            .deposit-detail-section .detail-item strong, .edit-deposit-section .detail-item strong {
+                width: auto;
+                display: block;
+                margin-bottom: 5px;
+            }
+            .login-modal-content {
+                 width: 95%;
+            }
+            .date-time-group {
+                 flex-direction: column;
+            }
+            .date-time-group .form-group {
+                 min-width: auto;
+                 width: 100%;
+            }
+            .cards-container {
+                gap: 20px;
+            }
+            .platform-card {
+                width: 200px;
+                padding: 20px 15px;
+            }
+            .platform-logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.3em;
+            }
+            .form-group input, .form-group textarea {
+                width: 100%;
+            }
+            .login-modal-content .form-group {
+                min-width: auto;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+            }
+            .logout-modal-content, .delete-modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+            .platform-card {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="hamburger-menu" id="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <h1>💲سامانه امور مالی سپهر💲</h1>
+    </header>
+
+    <!-- Sidebar - بدون آیکون -->
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li id="nav-home">صفحه اصلی</li>
+            <li id="nav-new-deposit">ثبت واریزی جدید</li>
+            <li id="nav-list">لیست واریزی‌ها</li>
+            <li id="nav-media">رسانه‌ها</li>
+            <li id="nav-support">پشتیبانی</li>
+            <li id="nav-guide">راهنما</li>
+        </ul>
+        <div class="sidebar-version">
+            <span class="version-text">نسخه ۲.۰</span>
+            <span class="version-number">version 2.0</span>
+        </div>
+        <!-- فاصله‌دهنده برای پر کردن بقیه فضای منو -->
+        <div class="sidebar-spacer"></div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-modal">
+        <div class="login-modal-content">
+            <h2>ورود به حساب کاربری</h2>
+            <div class="form-group">
+                <label for="phone-number">شماره تلفن</label>
+                <input type="tel" id="phone-number" name="phone-number" placeholder="09123456789" pattern="[0-9]{11}" required>
+            </div>
+            <button class="btn btn-primary" onclick="loginUser()">ورود</button>
+            <p style="font-size: 0.9em; color: #777; margin-top: 15px;">در اولین استفاده، پس از وارد کردن شماره تلفن، اطلاعات شما ذخیره خواهد شد.</p>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+
+        <!-- Home Page Section -->
+        <section id="main-page" class="main-page">
+            <h2>به داشبورد خوش آمدید</h2>
+            <p style="text-align: center;">لطفاً یکی از گزینه‌های زیر را انتخاب کنید:</p>
+            <div class="options">
+                <button class="btn btn-primary" onclick="showSection('new-deposit-section'); updateActiveNavLink('nav-new-deposit')">ثبت واریزی جدید</button>
+                <button class="btn btn-secondary" onclick="showSection('deposit-list-section'); updateActiveNavLink('nav-list')">مشاهده لیست واریزی‌ها</button>
+            </div>
+        </section>
+
+        <!-- Media Section - با لوگوهای رسمی و رنگ‌های جدید -->
+        <section id="media-section" class="media-section">
+            <h2>رسانه‌های رسمی سامانه</h2>
+            <div class="section-description">
+                <p>
+                    به کانال‌های رسمی سامانه امور مالی سپهر در پیام‌رسان‌های مختلف بپیوندید 
+                    و از آخرین اخبار، اطلاعیه‌ها و به‌روزرسانی‌های سامانه مطلع شوید.
+                </p>
+            </div>
+            <div class="cards-container">
+                <!-- Rubika Card - آبی -->
+                <div class="platform-card rubika" onclick="window.open('https://rubika.ir/sepehr_financial_system', '_blank')">
+                    <div class="platform-logo">
+                        <img src="https://rubika.ir/static/images/logo.svg" alt="روبیکا" style="width: 90px; height: 90px;">
+                    </div>
+                    <div class="platform-name">روبیکا</div>
+                    <div class="platform-description">کانال رسمی در روبیکا</div>
+                    <span class="platform-link">ورود به کانال</span>
+                </div>
+                
+                <!-- Eitaa Card - نارنجی -->
+                <div class="platform-card eitaa" onclick="window.open('https://eitaa.com/sepehr_financial_system', '_blank')">
+                    <div class="platform-logo">
+                        <img src="https://eitaa.ir/img/eitaa_logo.svg" alt="ایتا" style="width: 90px; height: 90px;">
+                    </div>
+                    <div class="platform-name">ایتا</div>
+                    <div class="platform-description">کانال رسمی در ایتا</div>
+                    <span class="platform-link">ورود به کانال</span>
+                </div>
+                
+                <!-- Bale Card - سبز -->
+                <div class="platform-card bale" onclick="window.open('http://ble.ir/sepehr_financial_system', '_blank')">
+                    <div class="platform-logo">
+                        <img src="https://bale.ai/logo/bale_logo.svg?w=96&q=75" alt="بله" style="width: 90px; height: 90px;">
+                    </div>
+                    <div class="platform-name">بله</div>
+                    <div class="platform-description">کانال رسمی در بله</div>
+                    <span class="platform-link">ورود به کانال</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section - با رنگ‌های جدید -->
+        <section id="support-section" class="support-section">
+            <h2>پشتیبانی سامانه</h2>
+            <div class="section-description">
+                <p>
+                    برای ارتباط با تیم پشتیبانی سامانه امور مالی سپهر، می‌توانید از طریق 
+                    حساب‌های پشتیبانی در پیام‌رسان‌های مختلف با ما در ارتباط باشید.
+                    پاسخگویی در سریع‌ترین زمان ممکن انجام خواهد شد.
+                </p>
+            </div>
+            <div class="cards-container">
+                <!-- Rubika Support Card - آبی -->
+                <div class="platform-card support-rubika" onclick="window.open('https://rubika.ir/Support_sepehr_financial_system', '_blank')">
+                    <div class="platform-logo">
+                        <img src="https://rubika.ir/static/images/logo.svg" alt="روبیکا" style="width: 90px; height: 90px;">
+                    </div>
+                    <div class="platform-name">روبیکا</div>
+                    <div class="platform-description">پشتیبانی در روبیکا</div>
+                    <span class="platform-link">ارتباط با پشتیبانی</span>
+                </div>
+                
+                <!-- Eitaa Support Card - نارنجی (Disabled) -->
+                <div class="platform-card support-eitaa">
+                    <div class="platform-logo">
+                        <img src="https://eitaa.ir/img/eitaa_logo.svg" alt="ایتا" style="width: 90px; height: 90px; opacity: 0.6;">
+                    </div>
+                    <div class="platform-name">ایتا</div>
+                    <div class="platform-description">پشتیبانی در ایتا</div>
+                    <span class="platform-link disabled">به زودی</span>
+                </div>
+                
+                <!-- Bale Support Card - سبز (Disabled) -->
+                <div class="platform-card support-bale">
+                    <div class="platform-logo">
+                        <img src="https://bale.ai/logo/bale_logo.svg?w=96&q=75" alt="بله" style="width: 90px; height: 90px; opacity: 0.6;">
+                    </div>
+                    <div class="platform-name">بله</div>
+                    <div class="platform-description">پشتیبانی در بله</div>
+                    <span class="platform-link disabled">به زودی</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Deposit Section -->
+        <section id="new-deposit-section" class="new-deposit-section">
+            <div class="form-title" onclick="toggleDepositForm()">
+                ثبت اطلاعات جدید و واریزی‌ها
+            </div>
+            <div id="deposit-form-container" style="display: none;">
+                <div class="deposit-form">
+                    <h3>اطلاعات واریز</h3>
+                    <div class="form-group">
+                        <label for="depositor-name">نام واریز کننده</label>
+                        <input type="text" id="depositor-name" placeholder="نام واریز کننده را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label>تاریخ واریزی</label>
+                        <div class="date-time-group">
+                            <div class="form-group">
+                                <label for="deposit-year">سال</label>
+                                <input type="number" id="deposit-year" placeholder="سال (شمسی)" min="1300" max="1499">
+                            </div>
+                            <div class="form-group">
+                                <label for="deposit-month">ماه</label>
+                                <input type="number" id="deposit-month" placeholder="ماه (۱-۱۲)" min="1" max="12">
+                            </div>
+                            <div class="form-group">
+                                <label for="deposit-day">روز</label>
+                                <input type="number" id="deposit-day" placeholder="روز (۱-۳۱)" min="1" max="31">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>زمان واریزی</label>
+                        <div class="date-time-group">
+                            <div class="form-group">
+                                <label for="deposit-hour">ساعت</label>
+                                <input type="number" id="deposit-hour" placeholder="ساعت (۰۰-۲۳)" min="0" max="23">
+                            </div>
+                            <div class="form-group">
+                                <label for="deposit-minute">دقیقه</label>
+                                <input type="number" id="deposit-minute" placeholder="دقیقه (۰۰-۵۹)" min="0" max="59">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-amount">مبلغ واریز شده به انگلیسی(تومان)</label>
+                        <input type="text" id="deposit-amount" placeholder="مبلغ را به تومان و حتماً به انگلیسی وارد کنید " oninput="formatAmountInput(this)">
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-card-number">شماره کارت واریز کننده</label>
+                        <input type="tel" id="deposit-card-number" placeholder="شماره کارت واریز کننده" oninput="formatCardNumberInput(this)">
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-description">توضیحات مربوطه</label>
+                        <textarea id="deposit-description" rows="4" placeholder="توضیحات اضافی را وارد کنید"></textarea>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="no-description-checkbox" name="no-description">
+                        <label for="no-description-checkbox">به توضیحات نیازی نیست</label>
+                    </div>
+                    <button class="btn btn-success" onclick="saveDepositInfo()">ثبت واریزی</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deposit List Section -->
+        <section id="deposit-list-section" class="deposit-list-section">
+            <h2>لیست واریزی‌ها</h2>
+            <div id="deposit-list-items">
+            </div>
+        </section>
+
+        <!-- Deposit Detail Section -->
+        <section id="deposit-detail-section" class="deposit-detail-section">
+            <h3>جزئیات واریزی</h3>
+            <div id="deposit-details-content">
+                <div class="detail-item"><strong>نام واریز کننده:</strong> <span id="detail-depositor-name"></span></div>
+                <div class="detail-item"><strong>تاریخ واریزی:</strong> <span id="detail-deposit-date"></span></div>
+                <div class="detail-item"><strong>زمان واریزی:</strong> <span id="detail-deposit-time"></span></div>
+                <div class="detail-item"><strong>مبلغ واریز شده:</strong> <span id="detail-deposit-amount"></span></div>
+                <div class="detail-item"><strong>شماره کارت واریز کننده:</strong> <span id="detail-deposit-card-number"></span></div>
+                <div class="detail-item"><strong>توضیحات:</strong> <span id="detail-deposit-description"></span></div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-danger" onclick="openDeleteModal(currentDepositIdForAction)">حذف اطلاعات</button>
+                <button class="btn btn-primary" onclick="editDepositInfo(currentDepositIdForAction)">ویرایش اطلاعات</button>
+                <button class="btn btn-secondary" onclick="hideSection('deposit-detail-section'); showSection('deposit-list-section'); updateActiveNavLink('nav-list')">بستن</button>
+            </div>
+        </section>
+
+        <!-- Edit Deposit Section -->
+        <section id="edit-deposit-section" class="edit-deposit-section">
+             <h3>ویرایش اطلاعات واریزی</h3>
+             <div class="form-group">
+                 <label for="edit-depositor-name">نام واریز کننده</label>
+                 <input type="text" id="edit-depositor-name" placeholder="نام واریز کننده را وارد کنید">
+             </div>
+             <div class="form-group">
+                 <label>تاریخ واریزی</label>
+                 <div class="date-time-group">
+                     <div class="form-group">
+                         <label for="edit-deposit-year">سال</label>
+                         <input type="number" id="edit-deposit-year" placeholder="سال (شمسی)" min="1300" max="1499">
+                     </div>
+                     <div class="form-group">
+                         <label for="edit-deposit-month">ماه</label>
+                         <input type="number" id="edit-deposit-month" placeholder="ماه (۱-۱۲)" min="1" max="12">
+                     </div>
+                     <div class="form-group">
+                         <label for="edit-deposit-day">روز</label>
+                         <input type="number" id="edit-deposit-day" placeholder="روز (۱-۳۱)" min="1" max="31">
+                     </div>
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label>زمان واریزی</label>
+                 <div class="date-time-group">
+                     <div class="form-group">
+                         <label for="edit-deposit-hour">ساعت</label>
+                         <input type="number" id="edit-deposit-hour" placeholder="ساعت (۰۰-۲۳)" min="0" max="23">
+                     </div>
+                     <div class="form-group">
+                         <label for="edit-deposit-minute">دقیقه</label>
+                         <input type="number" id="edit-deposit-minute" placeholder="دقیقه (۰۰-۵۹)" min="0" max="59">
+                     </div>
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label for="edit-deposit-amount">مبلغ واریز شده (تومان)</label>
+                 <input type="text" id="edit-deposit-amount" placeholder="مبلغ را به تومان وارد کنید" oninput="formatAmountInput(this)">
+             </div>
+             <div class="form-group">
+                 <label for="edit-deposit-card-number">شماره کارت واریز کننده</label>
+                 <input type="tel" id="edit-deposit-card-number" placeholder="شماره کارت واریز کننده" oninput="formatCardNumberInput(this)">
+             </div>
+             <div class="form-group">
+                 <label for="edit-deposit-description">توضیحات مربوطه</label>
+                 <textarea id="edit-deposit-description" rows="4" placeholder="توضیحات اضافی را وارد کنید"></textarea>
+             </div>
+             <div class="form-group checkbox-group">
+                 <input type="checkbox" id="edit-no-description-checkbox" name="edit-no-description">
+                 <label for="edit-no-description-checkbox">به توضیحات نیازی نیست</label>
+             </div>
+             <div class="btn-group">
+                 <button class="btn btn-success" onclick="updateDepositInfo(currentDepositIdForAction)">ذخیره تغییرات</button>
+                 <button class="btn btn-secondary" onclick="hideSection('edit-deposit-section'); showSection('deposit-detail-section'); updateActiveNavLink('nav-list')">لغو ویرایش</button>
+             </div>
+        </section>
+
+        <!-- Guide Section -->
+        <section id="guide-section" class="guide-section">
+            <h2>راهنمای کامل</h2>
+            <div class="guide-content">
+                <h3>معرفی پلتفرم</h3>
+                <p>
+                    این پلتفرم به شما کمک می‌کند تا تمام واریزی‌های خود را به صورت سازمان‌یافته مدیریت و پیگیری کنید. 
+                    با استفاده از رابط کاربری ساده و امکانات کاربردی، می‌توانید به راحتی اطلاعات واریزی‌ها را ثبت، مشاهده، ویرایش و حذف کنید.
+                </p>
+
+                <h3>بخش صفحه اصلی</h3>
+                <p>
+                    پس از ورود به حساب کاربری خود، با صفحه اصلی مواجه می‌شوید. در این صفحه دو دکمه اصلی وجود دارد:
+                </p>
+                <ul>
+                    <li><strong>ثبت واریزی جدید:</strong> با کلیک بر این دکمه، به فرم ثبت اطلاعات واریزی هدایت می‌شوید.</li>
+                    <li><strong>مشاهده لیست واریزی‌ها:</strong> با کلیک بر این دکمه، لیست تمام واریزی‌های ثبت شده را مشاهده خواهید کرد.</li>
+                </ul>
+
+                <h3>بخش رسانه‌ها</h3>
+                <p>
+                    در این بخش می‌توانید به کانال‌های رسمی سامانه امور مالی سپهر در پیام‌رسان‌های مختلف دسترسی داشته باشید:
+                </p>
+                <ul>
+                    <li><strong>کانال روبیکا:</strong> کانال رسمی سامانه در پیام‌رسان روبیکا</li>
+                    <li><strong>کانال ایتا:</strong> کانال رسمی سامانه در پیام‌رسان ایتا</li>
+                    <li><strong>کانال بله:</strong> کانال رسمی سامانه در پیام‌رسان بله</li>
+                </ul>
+                <p>
+                    با کلیک روی هر کارت، به کانال مربوطه در آن پیام‌رسان هدایت می‌شوید و می‌توانید 
+                    از آخرین اخبار و اطلاعیه‌های سامانه مطلع شوید.
+                </p>
+
+                <h3>بخش پشتیبانی</h3>
+                <p>
+                    برای ارتباط با تیم پشتیبانی سامانه امور مالی سپهر، می‌توانید از طریق حساب‌های پشتیبانی 
+                    در پیام‌رسان‌های مختلف اقدام کنید:
+                </p>
+                <ul>
+                    <li><strong>پشتیبانی در روبیکا:</strong> فعال و آماده پاسخگویی به سوالات شما</li>
+                    <li><strong>پشتیبانی در ایتا:</strong> به زودی فعال خواهد شد</li>
+                    <li><strong>پشتیبانی در بله:</strong> به زودی فعال خواهد شد</li>
+                </ul>
+                <p>
+                    تیم پشتیبانی ما در سریع‌ترین زمان ممکن به سوالات و مشکلات شما رسیدگی خواهد کرد.
+                </p>
+
+                <h3>بخش ثبت واریزی جدید</h3>
+                <p>
+                    در این بخش می‌توانید اطلاعات مربوط به هر واریزی را وارد کنید. فیلدهای موجود عبارتند از:
+                </p>
+                <ul>
+                    <li><strong>نام واریز کننده:</strong> نام فرد یا منبعی که واریز را انجام داده است.</li>
+                    <li><strong>تاریخ واریزی:</strong> تاریخ انجام واریزی به صورت سال، ماه و روز شمسی.</li>
+                    <li><strong>زمان واریزی:</strong> زمان انجام واریزی به صورت ساعت و دقیقه (فرمت ۲۴ ساعته).</li>
+                    <li><strong>مبلغ واریز شده:</strong> مبلغ واریزی به تومان.</li>
+                    <li><strong>شماره کارت واریز کننده:</strong> شماره کارتی که واریز از طریق آن انجام شده است (اختیاری).</li>
+                    <li><strong>توضیحات مربوطه:</strong> هرگونه توضیحات اضافی یا جزئیات مربوط به واریزی (اختیاری).</li>
+                </ul>
+                <p>
+                    برای سهولت در ورود، می‌توانید از چک‌باکس "به توضیحات نیازی نیست" استفاده کنید. 
+                    پس از تکمیل فرم، با زدن دکمه "ثبت واریزی"، اطلاعات ذخیره شده و به لیست واریزی‌ها هدایت خواهید شد.
+                </p>
+
+                <h3>بخش لیست واریزی‌ها</h3>
+                <p>
+                    این بخش لیستی از تمام واریزی‌های ثبت شده را نمایش می‌دهد. هر آیتم شامل تاریخ، مبلغ و زمان واریزی است. 
+                    با کلیک بر روی دکمه "مشاهده کامل اطلاعات" در کنار هر آیتم، می‌توانید جزئیات کامل آن واریزی را مشاهده کنید.
+                </p>
+
+                <h3>صفحه جزئیات واریزی</h3>
+                <p>
+                    در این صفحه، تمام اطلاعات مربوط به یک واریزی خاص به صورت خوانا نمایش داده می‌شود. همچنین دو دکمه در این صفحه وجود دارد:
+                </p>
+                <ul>
+                    <li><strong>حذف اطلاعات:</strong> با کلیک بر این دکمه، ابتدا یک تاییدیه برای اطمینان از حذف قطعی پرسیده می‌شود. 
+                    در صورت تایید، اطلاعات واریزی به طور کامل حذف خواهد شد.</li>
+                    <li><strong>ویرایش اطلاعات:</strong> با کلیک بر این دکمه، به فرم ویرایش اطلاعات هدایت می‌شوید 
+                    تا بتوانید فیلدهای مورد نظر را تغییر دهید.</li>
+                </ul>
+                <p>
+                    همچنین دکمه "بستن" برای بازگشت به لیست واریزی‌ها وجود دارد.
+                </p>
+
+                <h3>بخش ویرایش اطلاعات</h3>
+                <p>
+                    این بخش مشابه فرم ثبت واریزی است، اما فیلدها با اطلاعات موجود پر شده‌اند تا بتوانید آن‌ها را ویرایش کنید. 
+                    پس از اعمال تغییرات، دکمه "ذخیره تغییرات" را بزنید. دکمه "لغو ویرایش" نیز شما را به صفحه جزئیات بازمی‌گرداند.
+                </p>
+
+                <h3>بخش راهنما</h3>
+                <p>
+                    این صفحه که در حال مطالعه آن هستید، راهنمای کامل استفاده از تمامی امکانات این پلتفرم است.
+                </p>
+
+                <p>امیدواریم از استفاده از این پلتفرم لذت ببرید!</p>
+
+                <div class="final-options">
+                    <div id="guide-logout-button">
+                        <button class="btn btn-primary" onclick="openLogoutModal()">خروج از حساب کاربری</button>
+                    </div>
+                    <button class="btn btn-secondary" onclick="showSection('main-page'); updateActiveNavLink('nav-home')">فهمیدم</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-modal" class="logout-modal">
+        <div class="logout-modal-content">
+            <h3>تأیید خروج</h3>
+            <p>آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟</p>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="closeLogoutModal()">انصراف</button>
+                <button class="btn btn-danger" onclick="confirmLogout()">خروج</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="delete-modal">
+        <div class="delete-modal-content">
+            <h3>تأیید حذف</h3>
+            <p>آیا از حذف این واریزی اطمینان دارید؟ این عمل غیرقابل بازگشت است.</p>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">انصراف</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">حذف</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data Store (Simulated) ---
+        let depositsData = [];
+        let currentDepositIdForAction = null;
+
+        // --- Formatting Helper Functions ---
+        function formatAmount(amount) {
+            if (typeof amount !== 'string') {
+                amount = String(amount);
+            }
+            return amount.replace(/[\s,]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function formatAmountInput(inputElement) {
+            let value = inputElement.value.replace(/[\s,]/g, '');
+            inputElement.value = formatAmount(value);
+        }
+
+        function formatCardNumber(cardNumber) {
+            if (typeof cardNumber !== 'string') {
+                cardNumber = String(cardNumber);
+            }
+            const digitsOnly = cardNumber.replace(/\D/g, '');
+            return digitsOnly.replace(/(.{4})/g, '$1-').replace(/-$/, '');
+        }
+
+        function formatCardNumberInput(inputElement) {
+            inputElement.value = formatCardNumber(inputElement.value);
+        }
+
+        // --- DOM Elements ---
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.getElementById('hamburger');
+        const overlay = document.getElementById('overlay');
+        const loginModal = document.getElementById('login-modal');
+        const mainPageSection = document.getElementById('main-page');
+        const newDepositSection = document.getElementById('new-deposit-section');
+        const depositListSection = document.getElementById('deposit-list-section');
+        const depositDetailSection = document.getElementById('deposit-detail-section');
+        const editDepositSection = document.getElementById('edit-deposit-section');
+        const mediaSection = document.getElementById('media-section');
+        const supportSection = document.getElementById('support-section');
+        const guideSection = document.getElementById('guide-section');
+        const logoutModal = document.getElementById('logout-modal');
+        const deleteModal = document.getElementById('delete-modal');
+        const depositFormContainer = document.getElementById('deposit-form-container');
+        const guideLogoutButton = document.getElementById('guide-logout-button');
+        const depositAmountInput = document.getElementById('deposit-amount');
+        const depositCardNumberInput = document.getElementById('deposit-card-number');
+        const editDepositAmountInput = document.getElementById('edit-deposit-amount');
+        const editDepositCardNumberInput = document.getElementById('edit-deposit-card-number');
+
+        let isLoggedIn = false;
+        let activeSectionId = 'login-modal';
+
+        // --- Initialization ---
+        window.onload = () => {
+            const storedDeposits = localStorage.getItem('depositsData');
+            if (storedDeposits) {
+                depositsData = JSON.parse(storedDeposits);
+            }
+
+            if (localStorage.getItem('hasLoggedInBefore')) {
+                isLoggedIn = true;
+                loginModal.classList.remove('open');
+                document.body.style.overflow = 'auto';
+                showSection('main-page');
+                updateActiveNavLink('nav-home');
+                displayDepositList();
+            } else {
+                isLoggedIn = false;
+                loginModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                document.querySelector('.container').style.display = 'none';
+            }
+            updateVisibilityBasedOnLogin();
+        };
+
+        // --- Visibility and Navigation ---
+        function updateVisibilityBasedOnLogin() {
+            if (isLoggedIn) {
+                guideLogoutButton.style.display = 'block';
+                document.querySelector('.container').style.display = 'block';
+            } else {
+                guideLogoutButton.style.display = 'none';
+                document.querySelector('.container').style.display = 'none';
+            }
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.container > section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            const sectionToShow = document.getElementById(sectionId);
+            if (sectionToShow) {
+                sectionToShow.style.display = 'block';
+                activeSectionId = sectionId;
+
+                let navId = 'nav-home';
+                if (sectionId === 'main-page') navId = 'nav-home';
+                else if (sectionId === 'new-deposit-section') navId = 'nav-new-deposit';
+                else if (sectionId === 'deposit-list-section') navId = 'nav-list';
+                else if (sectionId === 'media-section') navId = 'nav-media';
+                else if (sectionId === 'support-section') navId = 'nav-support';
+                else if (sectionId === 'guide-section') navId = 'nav-guide';
+                updateActiveNavLink(navId);
+
+                updateVisibilityBasedOnLogin();
+            }
+        }
+
+        function hideSection(sectionId) {
+             const sectionToHide = document.getElementById(sectionId);
+             if(sectionToHide) {
+                 sectionToHide.style.display = 'none';
+             }
+        }
+
+        function updateActiveNavLink(clickedNavId) {
+            document.querySelectorAll('.sidebar li').forEach(item => {
+                item.classList.remove('active');
+            });
+            const activeNav = document.getElementById(clickedNavId);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+        }
+
+        // Sidebar toggle
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+
+        // Sidebar navigation clicks
+        document.querySelectorAll('.sidebar li').forEach(item => {
+            item.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+
+                let targetSection = '';
+                if (item.id === 'nav-home') targetSection = 'main-page';
+                else if (item.id === 'nav-new-deposit') targetSection = 'new-deposit-section';
+                else if (item.id === 'nav-list') targetSection = 'deposit-list-section';
+                else if (item.id === 'nav-media') targetSection = 'media-section';
+                else if (item.id === 'nav-support') targetSection = 'support-section';
+                else if (item.id === 'nav-guide') targetSection = 'guide-section';
+
+                if (targetSection) {
+                    showSection(targetSection);
+                }
+                updateActiveNavLink(item.id);
+            });
+        });
+
+        // --- Login Modal and User Management ---
+        function loginUser() {
+            const phoneNumber = document.getElementById('phone-number').value;
+            if (phoneNumber) {
+                isLoggedIn = true;
+                localStorage.setItem('hasLoggedInBefore', 'true');
+
+                loginModal.classList.remove('open');
+                document.body.style.overflow = 'auto';
+                overlay.classList.remove('open');
+                showSection('main-page');
+                updateActiveNavLink('nav-home');
+                updateVisibilityBasedOnLogin();
+                displayDepositList();
+
+                if (!localStorage.getItem('welcomeMessageShown')) {
+                     alert("ثبت نام شما با موفقیت انجام شد!");
+                     localStorage.setItem('welcomeMessageShown', 'true');
+                 }
+            } else {
+                alert("لطفاً شماره تلفن خود را وارد کنید.");
+            }
+        }
+
+        function logoutUser() {
+            isLoggedIn = false;
+            localStorage.removeItem('hasLoggedInBefore');
+            localStorage.removeItem('welcomeMessageShown');
+            localStorage.removeItem('depositsData');
+            depositsData = [];
+
+            document.body.style.overflow = 'hidden';
+            closeLogoutModal();
+
+            loginModal.classList.add('open');
+            showSection('main-page');
+            document.querySelector('.container').style.display = 'none';
+            updateVisibilityBasedOnLogin();
+        }
+
+        function confirmLogout() {
+             logoutUser();
+        }
+
+        function openLogoutModal() {
+            logoutModal.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLogoutModal() {
+            logoutModal.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- Deposit Management ---
+        function toggleDepositForm() {
+            const formContainer = document.getElementById('deposit-form-container');
+            if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+                formContainer.style.display = 'block';
+            } else {
+                formContainer.style.display = 'none';
+            }
+        }
+
+        function getCurrentPersianYear() {
+            const today = new Date();
+            const persian_year = today.toLocaleDateString('fa-IR').split('/')[0];
+            return parseInt(persian_year, 10);
+        }
+
+        function saveDepositInfo() {
+            const depositorName = document.getElementById('depositor-name').value;
+            const depositYear = parseInt(document.getElementById('deposit-year').value, 10);
+            const depositMonth = parseInt(document.getElementById('deposit-month').value, 10);
+            const depositDay = parseInt(document.getElementById('deposit-day').value, 10);
+            const depositHour = parseInt(document.getElementById('deposit-hour').value, 10);
+            const depositMinute = parseInt(document.getElementById('deposit-minute').value, 10);
+            const depositAmount = document.getElementById('deposit-amount').value.replace(/[\s,]/g, '');
+            const depositCardNumber = document.getElementById('deposit-card-number').value.replace(/\D/g, '');
+            const depositDescription = document.getElementById('deposit-description').value;
+            const noDescriptionCheckbox = document.getElementById('no-description-checkbox').checked;
+
+            if (!depositorName || isNaN(depositYear) || isNaN(depositMonth) || isNaN(depositDay) || 
+                isNaN(depositHour) || isNaN(depositMinute) || !depositAmount) {
+                alert("لطفاً تمامی کادرهای الزامی (نام، تاریخ، زمان، مبلغ) را پر کنید.");
+                return;
+            }
+            if (depositYear < 1300 || depositYear > getCurrentPersianYear() + 5) {
+                alert("سال وارد شده معتبر نیست.");
+                return;
+            }
+            if (depositMonth < 1 || depositMonth > 12) {
+                alert("ماه وارد شده باید بین ۱ تا ۱۲ باشد.");
+                return;
+            }
+            if (depositDay < 1 || depositDay > 31) {
+                alert("روز وارد شده باید بین ۱ تا ۳۱ باشد.");
+                return;
+            }
+            if (depositHour < 0 || depositHour > 23) {
+                alert("ساعت وارد شده باید بین ۰۰ تا ۲۳ باشد.");
+                return;
+            }
+            if (depositMinute < 0 || depositMinute > 59) {
+                alert("دقیقه وارد شده باید بین ۰۰ تا ۵۹ باشد.");
+                return;
+            }
+            if (depositCardNumber.length > 0 && depositCardNumber.length !== 16) {
+                alert("شماره کارت باید ۱۶ رقمی باشد.");
+                return;
+            }
+
+            const formattedDate = `${depositYear}/${String(depositMonth).padStart(2, '0')}/${String(depositDay).padStart(2, '0')}`;
+            const formattedTime = `${String(depositHour).padStart(2, '0')}:${String(depositMinute).padStart(2, '0')}`;
+
+            let finalDescription = depositDescription;
+            if (noDescriptionCheckbox) {
+                finalDescription = "";
+                document.getElementById('no-description-checkbox').checked = false;
+            }
+
+            const newDeposit = {
+                id: Date.now(),
+                depositorName: depositorName,
+                depositDate: formattedDate,
+                depositTime: formattedTime,
+                depositAmount: depositAmount,
+                depositCardNumber: depositCardNumber,
+                depositDescription: finalDescription
+            };
+
+            depositsData.push(newDeposit);
+            localStorage.setItem('depositsData', JSON.stringify(depositsData));
+            alert("اطلاعات واریزی با موفقیت ثبت شد!");
+
+            document.getElementById('depositor-name').value = '';
+            document.getElementById('deposit-year').value = '';
+            document.getElementById('deposit-month').value = '';
+            document.getElementById('deposit-day').value = '';
+            document.getElementById('deposit-hour').value = '';
+            document.getElementById('deposit-minute').value = '';
+            depositAmountInput.value = '';
+            depositCardNumberInput.value = '';
+            document.getElementById('deposit-description').value = '';
+            document.getElementById('no-description-checkbox').checked = false;
+
+            toggleDepositForm();
+            showSection('deposit-list-section');
+            updateActiveNavLink('nav-list');
+            displayDepositList();
+        }
+
+        function displayDepositList() {
+            const listContainer = document.getElementById('deposit-list-items');
+            listContainer.innerHTML = '';
+
+            if (depositsData.length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: #777;">هیچ واریزی ثبت نشده است.</p>';
+                return;
+            }
+
+            depositsData.sort((a, b) => {
+                const dateTimeA = new Date(`${a.depositDate.replace(/\//g, '-')}T${a.depositTime}:00`);
+                const dateTimeB = new Date(`${b.depositDate.replace(/\//g, '-')}T${b.depositTime}:00`);
+                return dateTimeB - dateTimeA;
+            });
+
+            depositsData.forEach(deposit => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'deposit-item';
+                itemDiv.dataset.id = deposit.id;
+                const formattedDisplayAmount = formatAmount(deposit.depositAmount);
+                itemDiv.innerHTML = `
+                    <div class="info">
+                        <span>تاریخ: ${deposit.depositDate}</span>
+                        <span>مبلغ: ${formattedDisplayAmount} تومان</span>
+                        <span>زمان: ${deposit.depositTime}</span>
+                    </div>
+                    <button class="btn btn-primary details-link" onclick="showDepositDetails(${deposit.id})">مشاهده کامل اطلاعات</button>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+        }
+
+        function showDepositDetails(depositId) {
+            currentDepositIdForAction = depositId;
+            const deposit = depositsData.find(d => d.id === depositId);
+
+            if (deposit) {
+                document.getElementById('detail-depositor-name').textContent = deposit.depositorName;
+                document.getElementById('detail-deposit-date').textContent = deposit.depositDate;
+                document.getElementById('detail-deposit-time').textContent = deposit.depositTime;
+                document.getElementById('detail-deposit-amount').textContent = formatAmount(deposit.depositAmount) + ' تومان';
+
+                let formattedCardNumber = deposit.depositCardNumber || 'ثبت نشده';
+                if (formattedCardNumber.length === 16) {
+                    formattedCardNumber = `${formattedCardNumber.substring(0, 4)}-${formattedCardNumber.substring(4, 8)}-${formattedCardNumber.substring(8, 12)}-${formattedCardNumber.substring(12, 16)}`;
+                } else if (formattedCardNumber.length > 0) {
+                     formattedCardNumber = formatCardNumber(formattedCardNumber);
+                }
+                document.getElementById('detail-deposit-card-number').textContent = formattedCardNumber;
+                document.getElementById('detail-deposit-description').textContent = deposit.depositDescription || 'توضیحات وارد نشده است.';
+
+                showSection('deposit-detail-section');
+                updateActiveNavLink('nav-list');
+            } else {
+                alert("اطلاعات واریزی یافت نشد.");
+            }
+        }
+
+        function editDepositInfo(depositId) {
+             const deposit = depositsData.find(d => d.id === depositId);
+             if (deposit) {
+                 document.getElementById('edit-depositor-name').value = deposit.depositorName;
+
+                 const dateParts = deposit.depositDate.split('/');
+                 if (dateParts.length === 3) {
+                     document.getElementById('edit-deposit-year').value = dateParts[0];
+                     document.getElementById('edit-deposit-month').value = parseInt(dateParts[1], 10);
+                     document.getElementById('edit-deposit-day').value = parseInt(dateParts[2], 10);
+                 }
+
+                 const timeParts = deposit.depositTime.split(':');
+                 if (timeParts.length === 2) {
+                     document.getElementById('edit-deposit-hour').value = parseInt(timeParts[0], 10);
+                     document.getElementById('edit-deposit-minute').value = parseInt(timeParts[1], 10);
+                 }
+
+                 editDepositAmountInput.value = formatAmount(deposit.depositAmount);
+                 editDepositCardNumberInput.value = formatCardNumber(deposit.depositCardNumber);
+                 document.getElementById('edit-deposit-description').value = deposit.depositDescription;
+                 document.getElementById('edit-no-description-checkbox').checked = (deposit.depositDescription === "");
+
+                 editDepositSection.dataset.currentDepositId = depositId;
+                 currentDepositIdForAction = depositId;
+
+                 showSection('edit-deposit-section');
+                 updateActiveNavLink('nav-list');
+             } else {
+                 alert("اطلاعات واریزی یافت نشد.");
+             }
+        }
+
+        function updateDepositInfo(depositId) {
+             const depositorName = document.getElementById('edit-depositor-name').value;
+             const depositYear = parseInt(document.getElementById('edit-deposit-year').value, 10);
+             const depositMonth = parseInt(document.getElementById('edit-deposit-month').value, 10);
+             const depositDay = parseInt(document.getElementById('edit-deposit-day').value, 10);
+             const depositHour = parseInt(document.getElementById('edit-deposit-hour').value, 10);
+             const depositMinute = parseInt(document.getElementById('edit-deposit-minute').value, 10);
+             const depositAmount = document.getElementById('edit-deposit-amount').value.replace(/[\s,]/g, '');
+             const depositCardNumber = document.getElementById('edit-deposit-card-number').value.replace(/\D/g, '');
+             const depositDescription = document.getElementById('edit-deposit-description').value;
+             const noDescriptionCheckbox = document.getElementById('edit-no-description-checkbox').checked;
+
+             if (!depositorName || isNaN(depositYear) || isNaN(depositMonth) || isNaN(depositDay) || 
+                 isNaN(depositHour) || isNaN(depositMinute) || !depositAmount) {
+                 alert("لطفاً تمامی کادرهای الزامی (نام، تاریخ، زمان، مبلغ) را پر کنید.");
+                 return;
+             }
+             if (depositYear < 1300 || depositYear > getCurrentPersianYear() + 5) {
+                 alert("سال وارد شده معتبر نیست.");
+                 return;
+             }
+             if (depositMonth < 1 || depositMonth > 12) {
+                 alert("ماه وارد شده باید بین ۱ تا ۱۲ باشد.");
+                 return;
+             }
+             if (depositDay < 1 || depositDay > 31) {
+                 alert("روز وارد شده باید بین ۱ تا ۳۱ باشد.");
+                 return;
+             }
+             if (depositHour < 0 || depositHour > 23) {
+                 alert("ساعت وارد شده باید بین ۰۰ تا ۲۳ باشد.");
+                 return;
+             }
+             if (depositMinute < 0 || depositMinute > 59) {
+                 alert("دقیقه وارد شده باید بین ۰۰ تا ۵۹ باشد.");
+                 return;
+             }
+             if (depositCardNumber.length > 0 && depositCardNumber.length !== 16) {
+                 alert("شماره کارت باید ۱۶ رقمی باشد.");
+                 return;
+             }
+
+            const formattedDate = `${depositYear}/${String(depositMonth).padStart(2, '0')}/${String(depositDay).padStart(2, '0')}`;
+            const formattedTime = `${String(depositHour).padStart(2, '0')}:${String(depositMinute).padStart(2, '0')}`;
+
+            let finalDescription = depositDescription;
+            if (noDescriptionCheckbox) {
+                finalDescription = "";
+                document.getElementById('edit-no-description-checkbox').checked = false;
+            }
+
+            const depositIndex = depositsData.findIndex(d => d.id === depositId);
+            if (depositIndex !== -1) {
+                depositsData[depositIndex] = {
+                    ...depositsData[depositIndex],
+                    depositorName,
+                    depositDate: formattedDate,
+                    depositTime: formattedTime,
+                    depositAmount: depositAmount,
+                    depositCardNumber: depositCardNumber,
+                    depositDescription: finalDescription
+                };
+                localStorage.setItem('depositsData', JSON.stringify(depositsData));
+                alert("اطلاعات واریزی با موفقیت به‌روزرسانی شد!");
+
+                // به‌روزرسانی لیست واریزی‌ها
+                displayDepositList();
+                
+                hideSection('edit-deposit-section');
+                // نمایش جزئیات به‌روز شده
+                showDepositDetails(depositId);
+            } else {
+                alert("خطا در به‌روزرسانی: واریزی یافت نشد.");
+            }
+        }
+
+        // --- Delete Functionality ---
+        function openDeleteModal(depositId) {
+            currentDepositIdForAction = depositId;
+            deleteModal.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            deleteModal.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = 'auto';
+            currentDepositIdForAction = null;
+        }
+
+        function confirmDelete() {
+            if (currentDepositIdForAction === null) {
+                alert("خطا: شناسه واریزی برای حذف مشخص نشده است.");
+                closeDeleteModal();
+                return;
+            }
+
+            const initialLength = depositsData.length;
+            depositsData = depositsData.filter(deposit => deposit.id !== currentDepositIdForAction);
+
+            if (depositsData.length < initialLength) {
+                localStorage.setItem('depositsData', JSON.stringify(depositsData));
+                alert("واریزی با موفقیت حذف شد.");
+                displayDepositList();
+                hideSection('deposit-detail-section');
+                showSection('deposit-list-section');
+                updateActiveNavLink('nav-list');
+            } else {
+                alert("خطا در حذف: واریزی یافت نشد.");
+            }
+
+            closeDeleteModal();
+        }
+    </script>
+</body>
+</html>
